@@ -28,15 +28,16 @@ class Tetris
 {
     public:
         void drawScreen(byte buffer2[]);
-        void drawFigure(String figure);
+        void drawFigure(String figure, byte shift);
+        Tetris();
     private:
-        void dropFigure(byte figure[]);
+        void dropFigure(byte figure[], byte shift);
         byte rows[8] = { ROW_1, ROW_2, ROW_3, ROW_4, ROW_5, ROW_6, ROW_7, ROW_8};
         byte T_Figure[8] = {B00000000, B00000000, B10000000,B11000000,B10000000,B00000000,B00000000,B00000000};
         byte TODOS[8] = {B11111111,B11111111,B11111111,B11111111,B11111111,B11111111,B11111111,B11111111};
         byte A[8] = {B00000000,B00011000,B00100100,B00100100,B00111100,B00100100,B00100100,B00000000};
         void setColumns(byte b);
-        int _a;
+        int count;
 };
 
 

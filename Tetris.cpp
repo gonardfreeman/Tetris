@@ -2,6 +2,10 @@
 #include "Arduino.h"
 
 
+Tetris::Tetris(){
+    count = 0;
+}
+
 void Tetris::drawScreen(byte buffer2[])
 {
     for (byte i = 0; i < 8; i++) {
@@ -12,8 +16,10 @@ void Tetris::drawScreen(byte buffer2[])
     }
 }
 
-void Tetris::drawFigure(String figure)
+void Tetris::drawFigure(String figure, byte shift)
 {
+    Serial.print(count);
+    count+=1;
     if ( figure == "TODOS" ) {
         drawScreen(TODOS);
         return;
@@ -23,10 +29,8 @@ void Tetris::drawFigure(String figure)
         return;
     }
     if ( figure == "t_figure" ) {
-        drawScreen(T_Figure);
-        delay(1500);
-        dropFigure(T_Figure);
-        drawScreen(T_Figure);
+        dropFigure(T_Figure, shift);
+        
         return;
     }
 }
@@ -45,9 +49,12 @@ void Tetris::setColumns(byte b)
     digitalWrite(COL_8, (~b >> 7) & 0x01);
 }
 
-void Tetris::dropFigure(byte figure[]) {
+void Tetris::dropFigure(byte figure[], byte shift) {
     for (byte i = 0; i < 8; i++) {
-        T_Figure[i] = figure[i] << 1;
+        setColumns(figure[i] >> shift); 
+        digitalWrite(rows[i], HIGH);
+        delay(2);
+        digitalWrite(rows[i], LOW);
     }
 }
 
